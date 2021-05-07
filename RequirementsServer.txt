@@ -1,0 +1,26 @@
+========================================= Media Files Configurations ===========================================
+php artisan storage:link
+========================================= End Media Files Configurations =======================================
+========================================= Socket IO Configurations =============================================
+//nodejs must be version + 8
+sudo apt-get install nodejs build-essential redis-server -y
+===================== go to directory of project ==============================
+npm install
+sudo npm i pm2 -g
+pm2 start nodejs/server.js (or whatever your file name)
+pm2 logs
+# To make sure app starts when reboot
+pm2 startup ubuntu
+========================================= End Socket IO Configurations =========================================
+----------------------------------------------------------------------------------------------------------------
+========================================= Cron Job Configurations ==============================================
+command : crontab -e
+Replace with
+-> {+++++}
+* * * * * php /var/www/html/artisan schedule:run >> /dev/null 2>&1
+->{++++++}
+========================================= End Cron Job Configurations ===========================================
+========================================= media ===========================================
+sudo apt install jpegoptim optipng pngquant gifsicle
+npm install -g svgo
+========================================= media ===========================================
