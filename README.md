@@ -11,7 +11,7 @@ i have been working on this project since some times ago and need to make it per
 
 3-admin can (create update delete list) users.
 
-4-admin can block users.
+4-admin can block users and change status for users pending to active.
 
 5-facade to handle all uploads dynamic just send request without do any thing and it will working fine upload all(images, videos, docs, Pdf, Logos, avatars) and handle all sizes in .env using spatie-media.
 
