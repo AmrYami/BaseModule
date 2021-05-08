@@ -2,9 +2,9 @@
 first just you need to do composer update then do php artisan migrate --seed
 table users using engine myisam to use full text search
 
-in front list users has input for search in (name, email, phone)
+in front list users has input for search in (name, email, phone) just write and enter
 
-still working on this base module to make it perfect.
+i have been working on this project since some times ago and need to make it perfect
 
 1-restructure framework to work as modules mean that every module has its own (controllers, models, views, middlewars, migrations, service providers, routs).
 2-auth web and api using jwt-auth
