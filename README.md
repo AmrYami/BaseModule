@@ -19,8 +19,8 @@ i have been working on this project since some times ago and need to make it per
 
 7- handle crm-admin this user has all permissions without assign any permissions.
 
-8- requests validations seperated to hande all requests.
+8- requests validations seperated to handel all requests.
 
 9-every user has its own profile and can update its own data if he has permissions.
 
-used solid hmvc design patterns repository design pattern controllers just call service , service has logic, service call repository ,repo manage all connection with database and every service and repo has its own interfaces and abstraction to restrict everything and used solid principles in all modules, classes and functions.
+used solid, hmvc, design patterns and repository design pattern, controllers just call service , service has logic, service call repository ,repo manage all connections with database and every service and repo has its own interfaces and abstraction to restrict everything and used solid principles in all modules, classes and functions.
