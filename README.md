@@ -4,7 +4,7 @@ table users using engine myisam to use full text search
 
 in front list users has input for search in (name, email, phone) just write and enter
 
-i have been working on this project since some times ago and need to make it perfect
+still working on this project to make it perfect
 
 1-restructure framework to work as modules mean that every module has its own (controllers, models, views, middlewars, migrations, service providers, routs).
 2-auth web and api using jwt-auth
