@@ -16,22 +16,8 @@ use Illuminate\Support\Facades\DB;
  * @version December 11, 2019, 2:33 pm UTC
 */
 
-class UserRepositoryShow implements RepositoryShow
+class UserRepositoryShow extends BaseRepository implements RepositoryShow
 {
-    /**
-     * @var User
-     */
-    private $model;
-
-    /**
-     * UserRepository constructor.
-     * @param User $model
-     */
-    public function __construct(User $model)
-    {
-
-        $this->model = $model;
-    }
 
     /**
      * @var array
@@ -68,7 +54,7 @@ class UserRepositoryShow implements RepositoryShow
      *
      * @return array
      */
-    public function getFieldsSearchable()
+    public function getFieldsSearchable() : array
     {
         return $this->fieldSearchable;
     }
@@ -76,7 +62,7 @@ class UserRepositoryShow implements RepositoryShow
     /**
      * Configure the Model
      **/
-    public function model()
+    public function model() : string
     {
         return User::class;
     }

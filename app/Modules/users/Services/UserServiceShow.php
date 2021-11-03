@@ -57,6 +57,14 @@ class UserServiceShow implements ServiceShow
         }
     }
 
+    /**
+     * @param array $criteria
+     * @param array|string[] $columns
+     * @return mixed
+     */
+    public function findByOperator(array $criteria, array $columns = ['*']){
+        return $this->repo->findByOperator($criteria, $columns);
+    }
 
 }
 
