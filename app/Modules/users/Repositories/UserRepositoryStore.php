@@ -16,23 +16,8 @@ use Illuminate\Support\Facades\DB;
  * @package App\Repositories
  * @version December 11, 2019, 2:33 pm UTC
  */
-class UserRepositoryStore implements RepositoryStore
+class UserRepositoryStore extends BaseRepository implements RepositoryStore
 {
-    /**
-     * @var User
-     */
-    private $model;
-
-    /**
-     * UserRepository constructor.
-     * @param User $model
-     */
-    public function __construct(User $model)
-    {
-
-        $this->model = $model;
-    }
-
     /**
      * @var array
      */
@@ -130,9 +115,17 @@ class UserRepositoryStore implements RepositoryStore
      *
      * @return array
      */
-    public function getFieldsSearchable()
+    public function getFieldsSearchable() : array
     {
         return $this->fieldSearchable;
+    }
+
+    /**
+     * Configure the Model
+     **/
+    public function model() : string
+    {
+        return User::class;
     }
 
 }

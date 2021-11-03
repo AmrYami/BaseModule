@@ -18,8 +18,8 @@ class users extends Seeder
         $data = [
             [
                 'name' => 'admin',
-                'email' => 'amryami@BaseModule.com',
-                'password'=> Hash::make('123456789'),
+                'email' => 'admin@admin.com',
+                'password'=> Hash::make('admin@admin.com'),
                 'type' => 'crm admin',
                 'code' => uniqid(),
                 'status' => 1
