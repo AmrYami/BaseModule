@@ -33,6 +33,7 @@
                 {{--                                </td>--}}
                 {{--                            @endif--}}
                 <td>
+                    @if($user->id != 1)
                     <div class='btn-group'>
                         @can('edit-users')
                             <a href="{{ route('users.edit', [$user->id]) }}"
@@ -68,6 +69,7 @@
                             {{--                                    {!! Form::close() !!}--}}
                         @endcan
                     </div>
+                    @endif
                 </td>
             @endcanany
         </tr>

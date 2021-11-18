@@ -170,6 +170,8 @@ class UsersController extends BaseController
      */
     public function destroy(Request $request, $id)
     {
+        if ($id == 1)
+            return back()->withErrors(__('common.You cant delete this user'));
         $delete = $this->userServiceStore->delete($request, $id);
         if ($delete) {
             return redirect()->back()->with('deleted', __('messages.Deleted', ['thing' => 'User']));
