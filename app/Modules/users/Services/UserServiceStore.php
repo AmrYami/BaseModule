@@ -51,12 +51,11 @@ class UserServiceStore extends Service implements ServiceStore
     public function save(Request $request)
     {
         try {
-
             $request->request->add(['code' => uniqid()]);
-        $user = $this->userRepositoryStore->save($request->all());
-        if ($user)
-            $this->userRepositoryStore->assignRole($user, $request->role);
-        return $user;
+            $user = $this->userRepositoryStore->save($request->all());
+            if ($user)
+                $this->userRepositoryStore->assignRole($user, $request->role);
+            return $user;
         } catch (\Exception $exception) {
             return false;
         }
@@ -71,15 +70,15 @@ class UserServiceStore extends Service implements ServiceStore
     public function update($id, Request $request)
     {
         try {
-        $data = $request->only($this->model->getFillable());
-        $user = $this->userRepositoryStore->update($id, $data);
-        if ($user) {
-            $userObject = $this->userRepositoryShow->find($id);
-            if ($request->role)
-                $this->userRepositoryStore->syncRole($userObject, $request->role);
-            MediaFacade::mediafiles($request, $userObject);
-        }
-        return $user;
+            $data = $request->only($this->model->getFillable());
+            $user = $this->userRepositoryStore->update($id, $data);
+            if ($user) {
+                $userObject = $this->userRepositoryShow->find($id);
+                if ($request->role)
+                    $this->userRepositoryStore->syncRole($userObject, $request->role);
+                MediaFacade::mediafiles($request, $userObject);
+            }
+            return $user;
         } catch (\Exception $exception) {
             return false;
         }
@@ -90,7 +89,7 @@ class UserServiceStore extends Service implements ServiceStore
         $this->clean_request($request);
         try {
             $data = ['password' => Hash::make($request->password)];
-            $user = $this->userRepositoryStore->updatePassword($id, $data);
+            $user = $this->userRepositoryStore->update($id, $data);
             return $user;
         } catch (\Exception $exception) {
             return false;
@@ -121,6 +120,13 @@ class UserServiceStore extends Service implements ServiceStore
     public function freeze(Request $request, $id = null)
     {
         $data = ['freeze' => 1];
+        $this->clean_request($request);
+        $delete = $this->userRepositoryStore->update($id, $data, $request->all());
+        return $delete;
+    }
+    public function un_freeze(Request $request, $id = null)
+    {
+        $data = ['freeze' => 0];
         $this->clean_request($request);
         $delete = $this->userRepositoryStore->update($id, $data, $request->all());
         return $delete;

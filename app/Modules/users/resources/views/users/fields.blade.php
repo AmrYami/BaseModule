@@ -40,7 +40,7 @@
                     </span>
     @endif
 </div>
-
+@if(isset($profile))
 <div class="form-group col-md-6 col-12">
     {!! Form::label('status', 'Status *:') !!}
     @if($errors->first('status'))
@@ -56,7 +56,7 @@
         ])
     !!}
 </div>
-
+@endif
 <!-- Mobile Field -->
 <div class="form-group col-md-6 col-12">
     {!! Form::label('mobile', 'Mobile:') !!}

@@ -73,9 +73,9 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <p><code class="highlighter-rouge">Role:</code></p>
+                                            <p><code class="highlighter-rouge">Role: </code></p>
                                         </td>
-                                        {{--                                        <td><span class="h3">{{ Auth::user()->roleName() }}</span></td>--}}
+                                        <td><span class="h3">{{ Auth::user()->roles[0]->name }}</span></td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -99,7 +99,7 @@
                             </div>
                         </div>
 
-                        @include('users::users.fields')
+                        @include('users::users.fields', ['profile => true'])
 
                     <!-- Avatar Field -->
                         <div class="form-group col-md-6 col-12">

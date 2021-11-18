@@ -2,21 +2,19 @@
 
 namespace Users\Repositories;
 
-use App\Interfaces\RepositoryShow;
+use App\Interfaces\BaseRepositoryInterface;
 use App\Interfaces\RepositoryStore;
-use Illuminate\Database\Eloquent\Model;
+use App\Repositories\BaseRepositoryStore;
 use Users\Models\User;
 use Illuminate\Http\Request;
-use App\Repositories\BaseRepository;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
 
 /**
  * Class CampaignRepository
  * @package App\Repositories
  * @version December 11, 2019, 2:33 pm UTC
  */
-class UserRepositoryStore extends BaseRepository implements RepositoryStore
+class UserRepositoryStore extends BaseRepositoryStore implements RepositoryStore, BaseRepositoryInterface
 {
     /**
      * @var array
@@ -41,12 +39,8 @@ class UserRepositoryStore extends BaseRepository implements RepositoryStore
      */
     public function save($data)
     {
-        // check weather is there id or not
-
-        $user = $this->model->create($data);
-        $user->password = Hash::make($user->password);
-        $user->save();
-
+        $data['password'] = Hash::make($data['password']);
+        $user = $this->create($data);
         return $user;
     }
 
@@ -62,15 +56,15 @@ class UserRepositoryStore extends BaseRepository implements RepositoryStore
      * @param Int $id
      * @return Boolean
      */
-    public function update($id, $data, $filter = null)
-    {
-        $user = $this->model->WHERE('id', $id);
-        if ($filter)
-            $user = $user->WHERE($filter);
-        $user = $user->update($data);
-
-        return $user;
-    }
+//    public function update($id, $data, $filter = null)
+//    {
+//        $user = $this->model->WHERE('id', $id);
+//        if ($filter)
+//            $user = $user->WHERE($filter);
+//        $user = $user->update($data);
+//
+//        return $user;
+//    }
 
     public function updatePassword($id, $data, $filter = null)
     {
@@ -100,15 +94,15 @@ class UserRepositoryStore extends BaseRepository implements RepositoryStore
      * @param Int $id
      * @return Boolean
      */
-    public function delete($id, $request)
-    {
-        $delete = $this->model->newQuery();
-        if ($request)
-            $delete = $delete->where($request);
-        if ($delete->findOrFail($id)->delete())
-            return true;
-        return false;
-    }
+//    public function delete($id, $request)
+//    {
+//        $delete = $this->model->newQuery();
+//        if ($request)
+//            $delete = $delete->where($request);
+//        if ($delete->findOrFail($id)->delete())
+//            return true;
+//        return false;
+//    }
 
     /**
      * Return searchable fields

@@ -13,6 +13,7 @@
 Route::namespace(buildControllerNamespace('Users'))->group(function () {//config take 2 values first our value second default value config(our value , default value)
     Route::get('users/trash', 'UsersController@trash')->name('users.trash')->middleware(['web', 'auth']);
     Route::PUT('users/freeze/{id}', 'UsersController@freeze')->name('users.freeze')->middleware(['web', 'auth']);
+    Route::PUT('users/un_freeze/{id}', 'UsersController@un_freeze')->name('users.un_freeze')->middleware(['web', 'auth']);
     Route::PUT('users/banned_until/{id}', 'UsersController@banned_until')->name('users.banned_until')->middleware(['web', 'auth']);
     Route::put('users/update_password/{id}', 'UsersController@update_password')->name('users.update_password')->middleware(['web', 'auth']);
     Route::get('/users/restore/{id}', 'UsersController@restoreUser')->middleware(['web', 'auth'])->name('users.restore');

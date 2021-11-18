@@ -2,36 +2,19 @@
 
 namespace Users\Repositories;
 
-use App\Interfaces\RepositoryShow;
+use App\Interfaces\BaseRepositoryInterface;
 use App\Interfaces\RepositoryStore;
-use Illuminate\Database\Eloquent\Model;
+use App\Repositories\BaseRepositoryStore;
 use Spatie\Permission\Models\Role;
 use Illuminate\Http\Request;
-use App\Repositories\BaseRepository;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
 
 /**
  * Class CampaignRepository
  * @package App\Repositories
  * @version December 11, 2019, 2:33 pm UTC
  */
-class RoleRepositoryStore implements RepositoryStore
+class RoleRepositoryStore extends BaseRepositoryStore implements RepositoryStore, BaseRepositoryInterface
 {
-    /**
-     * @var Role
-     */
-    private $model;
-
-    /**
-     * RoleRepository constructor.
-     * @param Role $model
-     */
-    public function __construct(Role $model)
-    {
-
-        $this->model = $model;
-    }
 
     /**
      * @var array
@@ -74,17 +57,17 @@ class RoleRepositoryStore implements RepositoryStore
      * @param Int $id
      * @return Boolean
      */
-    public function update($id, $data, $filter = null)
-    {
-        $role = $this->model->WHERE('id', $id);
-        if ($filter)
-            $role = $role->WHERE($filter);
-        $role = $role->update($data);
-        if (isset($role) && isset($request->selected)) {
-            $role->syncPermissions($request->selected);
-        }
-        return $role;
-    }
+//    public function update($id, $data, $filter = null)
+//    {
+//        $role = $this->model->WHERE('id', $id);
+//        if ($filter)
+//            $role = $role->WHERE($filter);
+//        $role = $role->update($data);
+//        if (isset($role) && isset($request->selected)) {
+//            $role->syncPermissions($request->selected);
+//        }
+//        return $role;
+//    }
 
 
     /**
@@ -94,24 +77,28 @@ class RoleRepositoryStore implements RepositoryStore
      * @param Int $id
      * @return Boolean
      */
-    public function delete($id, $request)
-    {
-        $delete = $this->model->newQuery();
-        if ($request)
-            $delete = $delete->where($request);
-        if ($delete->findOrFail($id)->delete())
-            return true;
-        return false;
-    }
+//    public function delete($id, $request)
+//    {
+//        $delete = $this->model->newQuery();
+//        if ($request)
+//            $delete = $delete->where($request);
+//        if ($delete->findOrFail($id)->delete())
+//            return true;
+//        return false;
+//    }
 
     /**
      * Return searchable fields
      *
      * @return array
      */
-    public function getFieldsSearchable()
+    public function getFieldsSearchable(): array
     {
         return $this->fieldSearchable;
     }
 
+    public function model(): string
+    {
+        return \Users\Models\Role::class;
+    }
 }

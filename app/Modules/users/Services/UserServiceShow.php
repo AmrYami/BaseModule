@@ -47,10 +47,10 @@ class UserServiceShow implements ServiceShow
      *
      * @param Int $id
      */
-    public function find($id, Request $request): object
+    public function find($id, Request $request = null): object
     {
         try {
-            $user = $this->repo->find($id, $request->all());
+            $user = $this->repo->find($id);
             return $user;
         }catch (\Exception $exception){
             return false;

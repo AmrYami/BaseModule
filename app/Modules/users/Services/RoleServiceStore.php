@@ -53,7 +53,7 @@ class RoleServiceStore extends Service implements ServiceStore
         try {
             $request->request->add(['guard_name' => 'web']);
             $data = $request->only($this->model->getFillable());
-            $role = $this->roleRepositoryStore->save($data);
+            $role = $this->roleRepositoryStore->create($data);
             $this->roleRepositoryStore->syncPermissions($request->selected, $role);
             return $role;
         } catch (\Exception $exception) {

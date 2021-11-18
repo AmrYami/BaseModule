@@ -2,36 +2,18 @@
 
 namespace Users\Repositories;
 
+use App\Interfaces\BaseRepositoryInterface;
 use App\Interfaces\RepositoryShow;
-use App\Interfaces\RepositoryStore;
-use Illuminate\Database\Eloquent\Model;
+use App\Repositories\BaseRepositoryShow;
 use Spatie\Permission\Models\Role;
-use Illuminate\Http\Request;
-use App\Repositories\BaseRepository;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
 /**
  * Class CampaignRepository
  * @package App\Repositories
  * @version December 11, 2019, 2:33 pm UTC
 */
 
-class RoleRepositoryShow implements RepositoryShow
+class RoleRepositoryShow extends BaseRepositoryShow implements RepositoryShow, BaseRepositoryInterface
 {
-    /**
-     * @var Role
-     */
-    private $model;
-
-    /**
-     * RoleRepository constructor.
-     * @param Role $model
-     */
-    public function __construct(Role $model)
-    {
-
-        $this->model = $model;
-    }
 
     /**
      * @var array
@@ -64,7 +46,7 @@ class RoleRepositoryShow implements RepositoryShow
      *
      * @return array
      */
-    public function getFieldsSearchable()
+    public function getFieldsSearchable(): array
     {
         return $this->fieldSearchable;
     }
@@ -72,18 +54,9 @@ class RoleRepositoryShow implements RepositoryShow
     /**
      * Configure the Model
      **/
-    public function model()
+    public function model(): string
     {
         return Role::class;
     }
 
-    public function edit($id)
-    {
-        // TODO: Implement edit() method.
-    }
-
-    public function find($id, array $filter = [])
-    {
-        return $this->model->findOrFail($id);
-    }
 }

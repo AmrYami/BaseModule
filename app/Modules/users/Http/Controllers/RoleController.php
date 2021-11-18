@@ -111,7 +111,7 @@ class RoleController extends BaseController
         if ($id == 1)
             return back();
         $role = $this->serviceShow->find($id, $request);
-        $rolePermissions = $role->permissions->pluck('id', 'id');
+        $rolePermissions = $role->permissions->pluck('id');
         $selected = $rolePermissions;
         return view('users::roles.edit', [
             'role' => $role,

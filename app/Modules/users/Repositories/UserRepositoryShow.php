@@ -2,21 +2,17 @@
 
 namespace Users\Repositories;
 
+use App\Interfaces\BaseRepositoryInterface;
 use App\Interfaces\RepositoryShow;
-use App\Interfaces\RepositoryStore;
-use Illuminate\Database\Eloquent\Model;
+use App\Repositories\BaseRepositoryShow;
 use Users\Models\User;
-use Illuminate\Http\Request;
-use App\Repositories\BaseRepository;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
 /**
  * Class CampaignRepository
  * @package App\Repositories
  * @version December 11, 2019, 2:33 pm UTC
 */
 
-class UserRepositoryShow extends BaseRepository implements RepositoryShow
+class UserRepositoryShow extends BaseRepositoryShow implements RepositoryShow, BaseRepositoryInterface
 {
 
     /**
@@ -67,13 +63,4 @@ class UserRepositoryShow extends BaseRepository implements RepositoryShow
         return User::class;
     }
 
-    public function edit($id)
-    {
-        // TODO: Implement edit() method.
-    }
-
-    public function find($id, array $filter = [])
-    {
-        return $this->model->findOrFail($id);
-    }
 }

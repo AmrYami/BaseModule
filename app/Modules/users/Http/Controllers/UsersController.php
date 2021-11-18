@@ -88,8 +88,6 @@ class UsersController extends BaseController
         } else {
             return back()->withErrors(__('common.Sorry But there Was an issue in saving Data please try again'));
         }
-
-
     }
 
     /**
@@ -101,14 +99,12 @@ class UsersController extends BaseController
      */
     public function show($id)
     {
-        $user = $this->userRepository->find($id);
-
+        $user = $this->serviceShow->find($id);
         if (empty($user)) {
             Flash::error('User not found');
 
             return redirect(route('users.index'));
         }
-
         return view('users::users.show')->with('user', $user);
     }
 
@@ -179,7 +175,6 @@ class UsersController extends BaseController
         } else {
             return back()->withErrors(__('common.Sorry But there Was an issue in saving Data please try again'));
         }
-
     }
 
     public function trash()
@@ -243,7 +238,15 @@ class UsersController extends BaseController
         } else {
             return back()->withErrors(__('common.Sorry But there Was an issue in saving Data please try again'));
         }
-
+    }
+    public function un_freeze(Request $request, $id)
+    {
+        $delete = $this->userServiceStore->un_freeze($request, $id);
+        if ($delete) {
+            return redirect()->back()->with('deleted', __('messages.Un-Freezed', ['thing' => 'User']));
+        } else {
+            return back()->withErrors(__('common.Sorry But there Was an issue in saving Data please try again'));
+        }
     }
 
 

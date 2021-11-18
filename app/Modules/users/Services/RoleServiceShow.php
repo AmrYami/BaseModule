@@ -36,7 +36,7 @@ class RoleServiceShow implements ServiceShow
      * @return Collection
      */
 
-    public function find_by(Request $request):object
+    public function find_by(Request $request): object
     {
         $roles = $this->repo->find_by($request->all());
         return $roles;
@@ -49,12 +49,12 @@ class RoleServiceShow implements ServiceShow
      */
     public function find($id, Request $request): object
     {
-        try {
-            $Role = $this->repo->find($id, $request->all());
+//        try {
+            $Role = $this->repo->find($id);
             return $Role;
-        }catch (\Exception $exception){
-            return false;
-        }
+//        } catch (\Exception $exception) {
+//            return false;
+//        }
     }
 
 
