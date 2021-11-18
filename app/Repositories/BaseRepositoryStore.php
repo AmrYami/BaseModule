@@ -34,7 +34,7 @@ class BaseRepositoryStore extends BaseRepository
      * @param array $search
      * @return Builder|Builder[]|Collection|Model
      */
-    public function update($id = null, array $input, array $search = [])
+    public function update($id = null,  array $input, array $search = [])
     {
         $query = $this->model->newQuery();
 

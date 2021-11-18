@@ -3,20 +3,12 @@
 namespace Users\Services;
 
 use App\Interfaces\ServiceShow;
-use App\Interfaces\ServiceStore;
 use Illuminate\Http\Request;
-use Users\Models\Role;
 use Users\Repositories\RoleRepositoryShow;
-use Mockery\Exception;
 
 class RoleServiceShow implements ServiceShow
 {
     public $repo;
-
-    public function edit($id)
-    {
-        // TODO: Implement edit() method.
-    }
 
     /**
      * Create a new Repository instance.
@@ -49,12 +41,12 @@ class RoleServiceShow implements ServiceShow
      */
     public function find($id, Request $request): object
     {
-//        try {
+        try {
             $Role = $this->repo->find($id);
             return $Role;
-//        } catch (\Exception $exception) {
-//            return false;
-//        }
+        } catch (\Exception $exception) {
+            return false;
+        }
     }
 
 

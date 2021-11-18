@@ -5,11 +5,12 @@ namespace Users\Http\Controllers;
 use Spatie\Permission\Models\Permission;
 use Users\Http\Requests\CreateRoleRequest;
 use Users\Http\Requests\UpdateRoleRequest;
-use Users\Services\RoleService;
 use App\Http\Controllers\BaseController;
 use Illuminate\Http\Request;
 use Users\Services\RoleServiceShow;
 use Users\Services\RoleServiceStore;
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\RedirectResponse;
 
 class RoleController extends BaseController
 {
@@ -40,7 +41,7 @@ class RoleController extends BaseController
      *
      * @return Response
      */
-    public function index(Request $request)
+    public function index(Request $request): Renderable
     {
         $roles = $this->serviceShow->find_by($request);
         return view('users::roles.index')
@@ -52,7 +53,7 @@ class RoleController extends BaseController
      *
      * @return Response
      */
-    public function create()
+    public function create(): Renderable
     {
         return view('users::roles.create', [
             'action' => 'create',
@@ -67,7 +68,7 @@ class RoleController extends BaseController
      *
      * @return Response
      */
-    public function store(CreateRoleRequest $request)
+    public function store(CreateRoleRequest $request): RedirectResponse
     {
         $role = $this->roleServiceStore->save($request);
         if ($role) {

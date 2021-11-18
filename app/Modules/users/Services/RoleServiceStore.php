@@ -3,11 +3,8 @@
 namespace Users\Services;
 
 use App\Abstratctions\Service;
-use App\Facades\MediaFacade;
 use App\Interfaces\ServiceStore;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Mockery\Exception;
 use Users\Models\Role;
 use Users\Repositories\RoleRepositoryShow;
 use Users\Repositories\RoleRepositoryStore;
@@ -106,15 +103,12 @@ class RoleServiceStore extends Service implements ServiceStore
     {
         $data = ['freeze' => 1];
         $this->clean_request($request);
-        $delete = $this->roleRepositoryStore->update($id, $data, $request->all());
-        return $delete;
+        return $this->roleRepositoryStore->update($id, $data, $request->all());
     }
 
     public function restore(Request $request, $id = null)
     {
-        $restored = $this->repo->restore($request, $id);
-        return $restored;
+        return $this->repo->restore($request, $id);
     }
 }
 
-?>

@@ -5,8 +5,8 @@ namespace Users\Repositories;
 use App\Interfaces\BaseRepositoryInterface;
 use App\Interfaces\RepositoryStore;
 use App\Repositories\BaseRepositoryStore;
-use Spatie\Permission\Models\Role;
 use Illuminate\Http\Request;
+use Users\Models\Role;
 
 /**
  * Class CampaignRepository
@@ -99,6 +99,6 @@ class RoleRepositoryStore extends BaseRepositoryStore implements RepositoryStore
 
     public function model(): string
     {
-        return \Users\Models\Role::class;
+        return Role::class;
     }
 }

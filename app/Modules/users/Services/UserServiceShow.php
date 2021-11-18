@@ -3,20 +3,12 @@
 namespace Users\Services;
 
 use App\Interfaces\ServiceShow;
-use App\Interfaces\ServiceStore;
 use Illuminate\Http\Request;
-use Users\Models\User;
 use Users\Repositories\UserRepositoryShow;
-use Mockery\Exception;
 
 class UserServiceShow implements ServiceShow
 {
     public $repo;
-
-    public function edit($id)
-    {
-        // TODO: Implement edit() method.
-    }
 
     /**
      * Create a new Repository instance.

@@ -3,10 +3,6 @@
 
 namespace App\Interfaces;
 
-
-use Faker\Core\Number;
-use Illuminate\Http\Request;
-
 interface RepositoryStore
 {
 

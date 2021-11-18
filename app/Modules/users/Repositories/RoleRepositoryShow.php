@@ -5,7 +5,8 @@ namespace Users\Repositories;
 use App\Interfaces\BaseRepositoryInterface;
 use App\Interfaces\RepositoryShow;
 use App\Repositories\BaseRepositoryShow;
-use Spatie\Permission\Models\Role;
+use Users\Models\Role;
+
 /**
  * Class CampaignRepository
  * @package App\Repositories

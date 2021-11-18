@@ -2,6 +2,7 @@
 
 namespace Users\Http\Controllers;
 
+use Illuminate\Contracts\Support\Renderable;
 use Users\Http\Requests\CreateUserRequest;
 use Users\Http\Requests\UpdateUserPasswordRequest;
 use Users\Http\Requests\UpdateUserRequest;
@@ -47,7 +48,7 @@ class UsersController extends BaseController
      *
      * @return Response
      */
-    public function index(Request $request)
+    public function index(Request $request): Renderable
     {
         $users = $this->serviceShow->find_by($request);
         return view('users::users.index')
@@ -97,7 +98,7 @@ class UsersController extends BaseController
      *
      * @return Response
      */
-    public function show($id)
+    public function show($id): Renderable
     {
         $user = $this->serviceShow->find($id);
         if (empty($user)) {
