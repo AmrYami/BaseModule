@@ -1,5 +1,6 @@
 # BaseModule
 first just you need to do composer update then do php artisan migrate --seed
+create directory public/upload/media
 table users using engine myisam to use full text search
 
 in front list users has input for search in (name, email, phone) just write and enter

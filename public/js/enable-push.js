@@ -52,21 +52,57 @@ function initPush() {
 }
 
 function subscribeUser() {
+    navigator.serviceWorker.ready
+        .then(registration => {
+            registration.pushManager.getSubscription()
+                .then(pushSubscription => {
+                    if(!pushSubscription){
+                        //the user was never subscribed
+                        subscribe(registration);
+                    }
+                    else{
+                        //check if user was subscribed with a different key
+                        let json = pushSubscription.toJSON();
+                        let public_key = json.keys.p256dh;
+
+                        console.log(public_key);
+
+                        if(public_key != NEW_PUBLIC_KEY){
+                            pushSubscription.unsubscribe().then(successful => {
+                                // You've successfully unsubscribed
+                                subscribe(registration);
+                            }).catch(e => {
+                                // Unsubscription failed
+                            })
+                        }
+                    }
+                });
+        })
+}
+function subscribeUser() {
     return navigator.serviceWorker.register('./js/sw.js')
         .then(function(registration) {
             const subscribeOptions = {
                 userVisibleOnly: true,
                 applicationServerKey: urlBase64ToUint8Array(
-                    'BEl62iUYgUivxIkv69yViEuiBIa-Ib9-SkvMeAtA3LFgDzkrxZJjSgSnfckjBJuBkr3qBUYIHBQFLXYp5Nksh8U'
+                    'BNpQxo_Zq98cY3vzKd4Wyo3wNmCHC1YbEcg0DO_HCylGtfPSMq_D_tjOaOZgJDHswmFwTiXHkyq7IHXa_U07Rog'
                 )
             };
-
-            console.log('subscribeUser subscribeUser subscribeUser ', subscribeOptions);
             return registration.pushManager.subscribe(subscribeOptions);
         })
         .then(function(pushSubscription) {
-            // console.log('Received PushSubscription: ', JSON.stringify(pushSubscription));
+            if(!pushSubscription){
+                pushSubscription.unsubscribe().then(successful => {
+                    // You've successfully unsubscribed
+                    // subscribe(registration);
+                    storePushSubscription(pushSubscription);
+                }).catch(e => {
+                    // Unsubscription failed
+                })
+            }
+
             storePushSubscription(pushSubscription);
+            // console.log('Received PushSubscription: ', JSON.stringify(pushSubscription));
         });
 }
 
