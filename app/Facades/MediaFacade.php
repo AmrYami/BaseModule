@@ -18,7 +18,7 @@ use Spatie\MediaLibrary\Models\Media;
  */
 class MediaFacade
 {
-    static $types = ["videos", "images", "logo", "documents", "avatar", "gallery"]; //we don't use this variable in this model
+    static $types = ["videos", "images", "logo", "image", "documents", "avatar", "gallery"]; //we don't use this variable in this model
 
     static $multiFilesType = ["videos", "images", "documents", "gallery"];
 
@@ -51,6 +51,10 @@ class MediaFacade
         // add avatar
         if ($request->avatar && $request->avatar !== 'undefined') {
             $error = self::attachLogoAvatarAndOtherSame($request->avatar, $item, 'avatar');
+        }
+        // add image
+        if ($request->image && $request->image !== 'undefined') {
+            $error = self::attachLogoAvatarAndOtherSame($request->avatar, $item, 'image');
         }
         //for attach document to an item
         if ($request->document && $request->document !== 'undefined') {
@@ -108,7 +112,6 @@ class MediaFacade
     static function addMediaArray(Request $request, $item)
     {
         $error = 0;
-
         foreach ($request->mediafile as $key => $files) {
             if (is_array($files) || is_object($files))
                 foreach ($files as $file) {
