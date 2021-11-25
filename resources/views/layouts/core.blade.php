@@ -46,59 +46,67 @@
                 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
                     <!--begin::Subheader-->
                     <div class="subheader py-2 py-lg-6 subheader-solid" id="kt_subheader">
-                        <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+                        <div
+                            class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
                             <!--begin::Info-->
 
                         @yield('breadcrumb')
-                            <!--end::Info-->
+                        <!--end::Info-->
 
                         </div>
                     </div>
                     <!--end::Subheader-->
-                <!--begin::Entry-->
-                <div class="d-flex flex-column-fluid">
-                    <!--begin::Container-->
-                    <div class="container">
-                        <!--begin::Dashboard-->
-                        <!--begin::Row-->
+                    <!--begin::Entry-->
+                    <div class="d-flex flex-column-fluid">
+                        <!--begin::Container-->
+                        <div class="container">
+                            <!--begin::Dashboard-->
+                            <!--begin::Row-->
 
 
-                    @yield('content')
-
-
-
+                        @yield('content')
 
 
 
 
 
-                    <!--end::Row-->
-                        <!--end::Dashboard-->
+
+
+
+                        <!--end::Row-->
+                            <!--end::Dashboard-->
+                        </div>
+                        <!--end::Container-->
                     </div>
-                    <!--end::Container-->
+                    <!--end::Entry-->
                 </div>
-                <!--end::Entry-->
+                <!--end::Content-->
+                @include('layouts.copyright')
             </div>
-            <!--end::Content-->
-            @include('layouts.copyright')
+            <!--end::Wrapper-->
+
+
         </div>
-        <!--end::Wrapper-->
-
-
+        <!--end::Page-->
     </div>
-    <!--end::Page-->
-</div>
-<!--end::Main-->
-@include('layouts.user_panel')
-@include('layouts.quick_cart')
-@include('layouts.quick_panel')
-@include('layouts.chat_panel')
-@include('layouts.scrolltop')
-{{--@include('layouts.toolbar')--}}
+    <!--end::Main-->
+    @include('layouts.user_panel')
+    @include('layouts.quick_cart')
+    @include('layouts.quick_panel')
+    @include('layouts.chat_panel')
+    @include('layouts.scrolltop')
+    {{--@include('layouts.toolbar')--}}
 
-@include('layouts.scripts')
-@stack('modals')
-@yield('footer')
-@stack('js')
+    @include('layouts.scripts')
+    @stack('modals')
+    @yield('footer')
+    @stack('js')
+
+{{--    @auth--}}
+        <script>
+            var currentToken = "{{ csrf_token() }}";
+        </script>
+        <script src="{{ asset('js/enable-push.js') }}" defer></script>
+{{--    @endauth--}}
 </body>
 </html>

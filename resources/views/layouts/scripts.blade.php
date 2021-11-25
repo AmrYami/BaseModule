@@ -24,3 +24,51 @@
 <!--end::Page Scripts-->
 
 {{ Html::script('js/main.js') }}
+
+
+{{-- socket io --}}
+<script src="https://code.jquery.com/jquery-migrate-3.2.0.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+
+<script type="text/javascript" charset="utf-8" async defer>
+    console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaa');
+    function appendNotifications(data) {
+        console.log(data);
+        var html = '<a href="' + data.route + '" class="kt-notification__item"> ' +
+            '<div class="kt-notification__item-icon">' +
+            '<i class="' + data.icon + '"></i>' +
+            ' </div>' +
+            '<div class="kt-notification__item-details">' +
+            '<div class="kt-notification__item-title">' +
+            data.title +
+            ' </div>' +
+            '<div class="kt-notification__item-time">' +
+            data.body +
+            '</div>' +
+            '</div>' +
+            '</a> '
+        $("#notification_body").append(html);
+        $('#notification-count').html($('#notification-count').html() * 1 + 1);
+        console.log(typeof data, data);
+        $.ajax({
+            method: "GET",
+            headers: {'X-CSRF-TOKEN': "{{ csrf_token() }}"},
+            url: "{{ route('push') }}",
+            data: {data: data}
+        }).done(function (response) {
+            console.log(data, 'web push', response);
+            if (response.status === 'success') {
+                console.log(data, 'web push', response);
+            }
+        }).fail(function (xhr, textStatus, errorThrown) {
+            console.log(xhr.responseText, errorThrown, textStatus, 'didnt');
+        });
+    }
+
+    var socket = io.connect('{{serverName()}}:{{env('PORT_NOTIFICATIONS')}}');
+    console.log('message-notifications-{{Auth::id()}}');
+    socket.on('message-notifications-{{Auth::id()}}', function (data) {
+        data = JSON.parse(data);
+        appendNotifications(data);
+    });
+</script>

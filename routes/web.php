@@ -20,4 +20,12 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+Route::get('/testNotinficationsWithWebPush', 'NotificationController@testNotinficationsWithWebPush')->name('testNotinficationsWithWebPush');
+
+Route::get('SeeAllNotifications', ['as' => 'SeeAllNotifications', 'uses' => 'NotificationController@seeAllNotifications'])->middleware(['web', 'auth']);
+
+Route::post('push','PushController@store');
+//make a push notification.
+Route::get('push','PushController@push')->name('push');

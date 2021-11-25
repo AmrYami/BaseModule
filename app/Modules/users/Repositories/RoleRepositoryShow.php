@@ -33,12 +33,9 @@ class RoleRepositoryShow extends BaseRepositoryShow implements RepositoryShow, B
      * @return Collection
      */
 
-    public function find_by(array $request)
+    public function find_by(array $request, $perPage = 25)
     {
-        $this->model->newQuery();
-        if ($request)
-            $this->model->where($request);
-            return $this->model->paginate(25);
+            return $this->paginate($request, $perPage);
     }
 
 

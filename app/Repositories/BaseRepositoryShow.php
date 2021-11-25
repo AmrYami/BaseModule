@@ -19,10 +19,9 @@ class BaseRepositoryShow extends BaseRepository
      * @param array $columns
      * @return LengthAwarePaginator
      */
-    public function paginate(int $perPage, array $columns = ['*']): LengthAwarePaginator
+    public function paginate(array $search = [],int $perPage, array $columns = ['*']): LengthAwarePaginator
     {
-        $query = $this->allQuery();
-
+        $query = $this->allQuery($search);
         return $query->paginate($perPage, $columns);
     }
 

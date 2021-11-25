@@ -3,6 +3,7 @@
 namespace Users\Models;
 
 use App\Notifications\ResetPassword;
+use NotificationChannels\WebPush\HasPushSubscriptions;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -17,7 +18,7 @@ class User extends Authenticatable implements HasMedia, JWTSubject
     use HasRoles;
     use InteractsWithMedia;
     use SoftDeletes;
-
+    use HasPushSubscriptions;
     /**
      * The attributes that are mass assignable.
      *

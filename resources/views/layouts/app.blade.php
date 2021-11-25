@@ -98,5 +98,6 @@
 <!--end::Page Scripts-->
 
 @yield('footer')
+
 </body>
 </html>

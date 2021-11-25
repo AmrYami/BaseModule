@@ -33,17 +33,20 @@ class UserRepositoryShow extends BaseRepositoryShow implements RepositoryShow, B
      * @return Collection
      */
 
-    public function find_by(array $request)
+//    public function find_by(array $request)
+//    {
+//       $query = $this->model->newQuery();
+//        if (isset($request['search']))
+//        $query->whereRaw("MATCH(name, email, mobile) AGAINST(? IN BOOLEAN MODE)",array($request['search']));
+//
+////        if ($request)
+////            $query->where($request);
+//        return $query->paginate(25);
+//    }
+    public function find_by(array $request, $perPage = 25)
     {
-       $query = $this->model->newQuery();
-        if (isset($request['search']))
-        $query->whereRaw("MATCH(name, email, mobile) AGAINST(? IN BOOLEAN MODE)",array($request['search']));
-
-//        if ($request)
-//            $query->where($request);
-        return $query->paginate(25);
+            return $this->paginate($request, $perPage);
     }
-
 
     /**
      * Return searchable fields
