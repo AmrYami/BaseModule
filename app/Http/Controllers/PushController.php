@@ -47,7 +47,7 @@ class PushController extends Controller
 //        return $webPushNotification;
         $user = \Users\Models\User::find(1);
         if ($user)
-            $res = $user->notify($webPushNotification);
+            $res = $user->notifyNow($webPushNotification);
         return response()->json(['success' => true, 'data' => $user, 'res' => $res], 200);
     }
 

@@ -102,11 +102,11 @@
     @yield('footer')
     @stack('js')
 
-{{--    @auth--}}
+    @auth
         <script>
             var currentToken = "{{ csrf_token() }}";
         </script>
         <script src="{{ asset('js/enable-push.js') }}" defer></script>
-{{--    @endauth--}}
+    @endauth
 </body>
 </html>
