@@ -51,34 +51,32 @@ function initPush() {
         });
 }
 
-function subscribeUser() {
-    navigator.serviceWorker.ready
-        .then(registration => {
-            registration.pushManager.getSubscription()
-                .then(pushSubscription => {
-                    if(!pushSubscription){
-                        //the user was never subscribed
-                        subscribe(registration);
-                    }
-                    else{
-                        //check if user was subscribed with a different key
-                        let json = pushSubscription.toJSON();
-                        let public_key = json.keys.p256dh;
-
-                        console.log(public_key);
-
-                        if(public_key != NEW_PUBLIC_KEY){
-                            pushSubscription.unsubscribe().then(successful => {
-                                // You've successfully unsubscribed
-                                subscribe(registration);
-                            }).catch(e => {
-                                // Unsubscription failed
-                            })
-                        }
-                    }
-                });
-        })
-}
+// function subscribeUser() {
+//     navigator.serviceWorker.ready
+//         .then(registration => {
+//             registration.pushManager.getSubscription()
+//                 .then(pushSubscription => {
+//                     if(!pushSubscription){
+//                         //the user was never subscribed
+//                         subscribe(registration);
+//                     }
+//                     else{
+//                         //check if user was subscribed with a different key
+//                         let json = pushSubscription.toJSON();
+//                         let public_key = json.keys.p256dh;
+//                         console.log(public_key);
+//                         if(public_key != NEW_PUBLIC_KEY){
+//                             pushSubscription.unsubscribe().then(successful => {
+//                                 // You've successfully unsubscribed
+//                                 subscribe(registration);
+//                             }).catch(e => {
+//                                 // Unsubscription failed
+//                             })
+//                         }
+//                     }
+//                 });
+//         })
+// }
 function subscribeUser() {
     return navigator.serviceWorker.register('./js/sw.js')
         .then(function(registration) {
@@ -91,18 +89,8 @@ function subscribeUser() {
             return registration.pushManager.subscribe(subscribeOptions);
         })
         .then(function(pushSubscription) {
-            if(!pushSubscription){
-                pushSubscription.unsubscribe().then(successful => {
-                    // You've successfully unsubscribed
-                    // subscribe(registration);
-                    storePushSubscription(pushSubscription);
-                }).catch(e => {
-                    // Unsubscription failed
-                })
-            }
-
-            storePushSubscription(pushSubscription);
             // console.log('Received PushSubscription: ', JSON.stringify(pushSubscription));
+            storePushSubscription(pushSubscription);
         });
 }
 
