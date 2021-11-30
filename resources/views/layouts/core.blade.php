@@ -100,13 +100,14 @@
     @include('layouts.scripts')
     @stack('modals')
     @yield('footer')
-    @stack('js')
 
     @auth
         <script>
             var currentToken = "{{ csrf_token() }}";
         </script>
         <script src="{{ asset('js/enable-push.js') }}" defer></script>
-    @endauth
+@endauth
+    @stack('js')
+
 </body>
 </html>

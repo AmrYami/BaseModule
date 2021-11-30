@@ -28,7 +28,7 @@
 
 {{-- socket io --}}
 <script src="https://code.jquery.com/jquery-migrate-3.2.0.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.0/socket.io.js"></script>
 
 <script type="text/javascript" charset="utf-8" async defer>
     console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaa');
