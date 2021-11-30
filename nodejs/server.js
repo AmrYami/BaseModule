@@ -15,7 +15,12 @@ if ((dotenv.parsed).HTTPS == 'TRUE') {
     withSSLOrNot = require('https').Server(options, app);
 } else
     withSSLOrNot = require('http').Server(app);
-var io = require('socket.io')(withSSLOrNot);
+var io = require('socket.io')(withSSLOrNot, {
+    cors: {
+        origin: (dotenv.parsed).APP_URL+':8890',
+        methods: ["GET", "POST"]
+    }
+});
 
 console.log((dotenv.parsed).HTTPS);
 
