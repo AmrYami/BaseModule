@@ -112,20 +112,21 @@ function urlBase64ToUint8Array(base64String) {
 function storePushSubscription(pushSubscription) {
      const token = $('meta[name="csrf-token"]').attr('content');
     console.log('currentToken: ', currentToken);
+    var headers = {
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': currentToken
+
+    };
     console.log('token: ', token);
      console.log('pushSubscription: ', pushSubscription);
     // 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') "_token": "{{ csrf_token() }}"
     return fetch('push', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': token
-
-        },
+        headers: headers,
         body: JSON.stringify(pushSubscription)
     })
         .then(function(response) {
-
+console.log('response responseresponse responseresponse response',response);
             if (!response.ok) {
                 throw new Error('Bad status code from server.');
             }
