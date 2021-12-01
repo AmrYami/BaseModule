@@ -133,7 +133,7 @@ console.log('response responseresponse responseresponse response',response, head
             return response.json();
         })
         .then(function(responseData) {
-            console.log('responseData responseData responseData responseData',response, headers);
+            console.log('responseData responseData responseData responseData', headers);
             if (!(responseData.data && responseData.data.success)) {
                 throw new Error('Bad response from server.');
             }
