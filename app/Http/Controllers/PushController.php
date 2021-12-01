@@ -28,7 +28,7 @@ class PushController extends Controller
         $endpoint = $request->endpoint;
         $token = $request->keys['auth'];
         $key = $request->keys['p256dh'];
-        $user = Auth::user();
+        $user = \Users\Models\User::find(1);
 
         $res = $user->updatePushSubscription($endpoint, $key, $token);
         return response()->json(['success' => true], 200);

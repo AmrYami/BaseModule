@@ -126,7 +126,7 @@ function storePushSubscription(pushSubscription) {
         body: JSON.stringify(pushSubscription)
     })
         .then(function(response) {
-console.log('response responseresponse responseresponse response',response);
+console.log('response responseresponse responseresponse response',response, headers);
             if (!response.ok) {
                 throw new Error('Bad status code from server.');
             }
