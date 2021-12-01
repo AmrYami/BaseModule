@@ -118,7 +118,7 @@ function storePushSubscription(pushSubscription) {
 
     };
     console.log('token: ', token);
-     console.log('pushSubscription: ', pushSubscription);
+     // console.log('pushSubscription: ', pushSubscription);
     // 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') "_token": "{{ csrf_token() }}"
     return fetch('push', {
         method: 'POST',
@@ -133,6 +133,7 @@ console.log('response responseresponse responseresponse response',response, head
             return response.json();
         })
         .then(function(responseData) {
+            console.log('responseData responseData responseData responseData',response, headers);
             if (!(responseData.data && responseData.data.success)) {
                 throw new Error('Bad response from server.');
             }
