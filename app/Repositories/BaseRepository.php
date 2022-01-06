@@ -48,13 +48,16 @@ abstract class BaseRepository
 
         return $this->model = $model;
     }
-
+//for search make request has value => array(operator, $value)
     public function search($query, $search)
     {
         if (count($search)) {
             foreach ($search as $key => $value) {
                 if (in_array($key, $this->getFieldsSearchable())) {
-                    $query->where($key, $value);
+                    if (is_array($value))
+                        $query->where($key, $value[0], $value[1]);
+                    else
+                        $query->where($key, $value);
                 }
             }
         }

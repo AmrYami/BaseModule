@@ -34,7 +34,7 @@ class BaseRepositoryStore extends BaseRepository
      * @param array $search
      * @return Builder|Builder[]|Collection|Model
      */
-    public function update($id = null,  array $input, array $search = [])
+    public function update($id = null, array $input, array $search = [])
     {
         $query = $this->model->newQuery();
 
@@ -50,6 +50,36 @@ class BaseRepositoryStore extends BaseRepository
 
         $model->save();
 
+        return $model;
+    }
+
+    //updateMultiRaws($request->users, ['parent_id' => $request->parent_id])
+    //$id is array of ids
+    //inputs what we need to update [name => $value]
+    public function updateMultiRaws($id = [], array $input, array $search = [])
+    {
+        $query = $this->model->newQuery();
+        if ($search && count($search)) {
+            $query = $this->search($query, $search);
+        }
+        if ($id)
+            $model = $query->whereIn('id', $id)->update($input);
+        return $model;
+    }
+
+    //updateRawsBySpecifiecColumn(['column name', $value or $values], ['parent_id' => $value])
+    //$column first take name column second value is $value or $values
+    //input is array to update column :: column name => $value
+    public function updateRawsBySpecifiecColumn($column = [], array $input, array $search = [])
+    {
+        $query = $this->model->newQuery();
+        if ($search && count($search)) {
+            $query = $this->search($query, $search);
+        }
+        if ($column && is_array($column[1]))
+            $model = $query->whereIn($column[0], $column[1])->update($input);
+        else
+            $model = $query->where($column[0], $column[1])->update($input);
         return $model;
     }
 
