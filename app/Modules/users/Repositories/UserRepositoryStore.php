@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 /**
- * Class CampaignRepository
+ * Class Repository
  * @package App\Repositories
  * @version December 11, 2019, 2:33 pm UTC
  */

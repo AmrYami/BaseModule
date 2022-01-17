@@ -212,7 +212,6 @@
                             </div>
                             <div class="navi-text">
                                 <div class="font-weight-bold font-size-lg">5 new user generated report</div>
-                                <div class="text-muted">Reports based on sales</div>
                             </div>
                         </div>
                     </a>
@@ -242,7 +241,6 @@
                             </div>
                             <div class="navi-text">
                                 <div class="font-weight-bold font-size-lg">79 PSD files generated</div>
-                                <div class="text-muted">Reports based on sales</div>
                             </div>
                         </div>
                     </a>
@@ -377,7 +375,6 @@
                             </div>
                             <div class="navi-text">
                                 <div class="font-weight-bold font-size-lg">7 new user generated report</div>
-                                <div class="text-muted">Reports based on sales</div>
                             </div>
                         </div>
                     </a>
@@ -445,9 +442,7 @@
                     <div class="separator separator-dashed my-6"></div>
                     <!--begin::Section-->
                     <div class="pt-2">
-                        <h5 class="font-weight-bold mb-3">Reports</h5>
                         <div class="form-group mb-0 row align-items-center">
-                            <label class="col-8 col-form-label">Generate Reports:</label>
                             <div class="col-4 d-flex justify-content-end">
 										<span class="switch switch-sm switch-danger">
 											<label>

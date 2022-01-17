@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Users\Models\Role;
 
 /**
- * Class CampaignRepository
+ * Class Repository
  * @package App\Repositories
  * @version December 11, 2019, 2:33 pm UTC
  */

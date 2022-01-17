@@ -17,7 +17,7 @@ class TopMGTPermissionsTableSeeder extends Seeder
             [
                 "name"=> "dashboard",
                 "display_name" => "Dashboard",
-                "description" => "Who can access general reports and team performance through dashboard",
+                "description" => "Who can access general dashboard",
                 "permission_group"=>"top-mgt",
                 "guard_name" => "web",
                 "created_at" => Carbon::now()->toDateTimeString(),
