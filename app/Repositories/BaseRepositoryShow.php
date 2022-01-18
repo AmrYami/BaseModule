@@ -204,10 +204,22 @@ class BaseRepositoryShow extends BaseRepository
         return $query;
     }
 
+    public function searchInRel($query, $search)
+    {
+        if (count($search)) {
+            foreach ($search as $val) {
+                foreach ($val as $key => $value) {
+                    $query->where($key, $value);
+                }
+            }
+        }
+        return $query;
+    }
+
     public function proccessQuery($q, $values, $test = '')
     {
         if (isset($values['where']) && count($values['where']) > 0) {
-            $q = $this->search($q, $values);
+            $q = $this->searchInRel($q, $values);
         }
         if (isset($values['whereBetween']) && count($values['whereBetween']) > 0) {
             foreach ($values['whereBetween'] as $key => $value) {
