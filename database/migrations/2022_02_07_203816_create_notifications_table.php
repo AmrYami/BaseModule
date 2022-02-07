@@ -14,19 +14,17 @@ class CreateNotificationsTable extends Migration
     public function up()
     {
         Schema::create('notifications', function (Blueprint $table) {
-            $table->bigInteger('id', true);
-            $table->bigInteger('notify_id')->nullable();
-            $table->enum('notify_type', ['comments', 'users'])->nullable();
+            $table->uuid('id')->primary();
+            $table->string('type');
+            $table->morphs('notifiable');
             $table->enum('seen', ['0', '1'])->comment('0 == not seen | 1 == seen');
+            $table->text('data');
+            $table->string('route')->nullable();
+            $table->string('title')->nullable();
+            $table->string('icon')->nullable();
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->string('type', 20)->nullable();
-            $table->string('related_type')->nullable();
-            $table->string('related_id')->nullable();
-            $table->string('body')->nullable();
-            $table->string('title')->nullable();
-            $table->string('route')->nullable();
-            $table->string('icon')->nullable();
+            $table->timestamp('read_at')->nullable();
             $table->timestamps();
         });
     }

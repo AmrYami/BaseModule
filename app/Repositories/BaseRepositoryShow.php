@@ -20,9 +20,9 @@ class BaseRepositoryShow extends BaseRepository
      * @param array $columns
      * @return LengthAwarePaginator
      */
-    public function paginate(array $search = [],int $perPage, array $columns = ['*']): LengthAwarePaginator
+    public function paginate(array $search = [],int $perPage, array $columns = ['*'], $skip = null, $limit = null): LengthAwarePaginator
     {
-        $query = $this->allQuery($search);
+        $query = $this->allQuery($search, $skip, $limit);
         return $query->paginate($perPage, $columns);
     }
 
@@ -83,6 +83,7 @@ class BaseRepositoryShow extends BaseRepository
     public function find(int $id, array $columns = ['*'])
     {
         $query = $this->model->newQuery();
+        $query = $this->moreImplementation($query);
         return $query->find($id, $columns);
     }
 
@@ -139,12 +140,15 @@ class BaseRepositoryShow extends BaseRepository
         if ($whereHas = MoreImplementation::getWhereHas())
             $query = $this->addWhereHasToQuery($query, $whereHas);
 
-        if ($whereHas = MoreImplementation::getWithQuery())
-            $query = $this->addWithQueryToQuery($query, $whereHas);
+        if ($withQuery = MoreImplementation::getWithQuery())
+            $query = $this->addWithQueryToQuery($query, $withQuery);
+
+        if ($moreConditionsInFirstLevel = MoreImplementation::getMoreConditionsInFirstLevel())
+            $query = $this->addMoreConditionsInFirstLevelToQuery($query, $moreConditionsInFirstLevel);
 
         return $query;
     }
-
+//        MoreImplementation::setOrWhere(['status', 1]);
     public function addOrWhereToQuery($query, $orWhere)
     {
         foreach ($orWhere as $val) {
@@ -158,6 +162,7 @@ class BaseRepositoryShow extends BaseRepository
         return $query;
     }
 
+//MoreImplementation::setWith(['parent', 'shift', 'delegation', 'jobTitle', 'administrationTitle']);
     public function addWithToQuery($query, $with)
     {
         foreach ($with as $val) {
@@ -176,6 +181,13 @@ class BaseRepositoryShow extends BaseRepository
 //           'add more conditions' =>
 //             ]
 //];
+
+
+//MoreImplementation::setWhereHas([
+            //              'roles' => [
+            //              'where' => ['name' => "owner"]
+            //          ]
+            //      ]);
     public function addWhereHasToQuery($query, $whereHas)
     {
         foreach ($whereHas as $val) {
@@ -189,7 +201,18 @@ class BaseRepositoryShow extends BaseRepository
         }
         return $query;
     }
-
+//$with = [
+//        'attendances' => [
+//            'where' => [
+//            'company_id' => Auth::user()->company_id
+//        ],
+//            'whereDate' => [
+//            'date' => $today
+//        ],
+//    ]
+//];
+//MoreImplementation::setWithQuery($with);
+//use with function to add conditions in with relation
     public function addWithQueryToQuery($query, $whereHas)
     {
         foreach ($whereHas as $val) {
@@ -204,28 +227,107 @@ class BaseRepositoryShow extends BaseRepository
         return $query;
     }
 
+//MoreImplementation::setMoreConditionsInFirstLevel(['whereMonth' => ['date' => $month],
+// add more conditions in first level
+    public function addMoreConditionsInFirstLevelToQuery($query, $conditions)
+    {
+        foreach ($conditions as $val) {
+            $query = self::proccessQuery($query, $val);
+//            }
+        }
+        return $query;
+    }
+
     public function searchInRel($query, $search)
     {
         if (count($search)) {
-            foreach ($search as $val) {
-                foreach ($val as $key => $value) {
+//            foreach ($search as $val) {
+                foreach ($search as $key => $value) {
                     $query->where($key, $value);
-                }
+//                }
             }
         }
         return $query;
     }
 
-    public function proccessQuery($q, $values, $test = '')
+
+    public function whereDate($query, $search)
     {
-        if (isset($values['where']) && count($values['where']) > 0) {
-            $q = $this->searchInRel($q, $values);
-        }
-        if (isset($values['whereBetween']) && count($values['whereBetween']) > 0) {
-            foreach ($values['whereBetween'] as $key => $value) {
-                $q->whereBetween($key, [$value[0], $value[1]]);
+        if (count($search)) {
+            foreach ($search as $key => $value) {
+                if (is_array($value))
+                    $query->whereDate($key, $value[0], $value[1]);
+                else
+                    $query->whereDate($key, $value);
             }
         }
+        return $query;
+    }
+
+    public function whereYear($query, $search)
+    {
+        if (count($search)) {
+            foreach ($search as $key => $value) {
+                if (is_array($value))
+                    $query->whereYear($key, $value[0], $value[1]);
+                else
+                    $query->whereYear($key, $value);
+            }
+        }
+        return $query;
+    }
+
+    public function whereMonth($query, $search)
+    {
+        if (count($search)) {
+            foreach ($search as $key => $value) {
+                if (is_array($value))
+                    $query->whereMonth($key, $value[0], $value[1]);
+                else
+                    $query->whereMonth($key, $value);
+            }
+        }
+        return $query;
+    }
+
+    public function whereIn($q, $values)
+    {
+        if (isset($values['whereIn']) && count($values['whereIn']) > 0) {
+            foreach ($values['whereIn'] as $where => $value) {
+                $q->whereIn($where, $value);
+            }
+        }
+        return $q;
+    }
+
+    public function whereBetween($q, $values)
+    {
+        foreach ($values as $key => $value) {
+            $q->whereBetween($key, [$value[0], $value[1]]);
+        }
+    }
+
+
+    public function proccessQuery($q, $values)
+    {
+        if (isset($values['where']) && count($values['where']) > 0) {
+            $q = $this->searchInRel($q, $values['where']);
+        }
+        if (isset($values['whereDate']) && count($values['whereDate']) > 0) {
+            $q = $this->whereDate($q, $values['whereDate']);
+        }
+        if (isset($values['whereYear']) && count($values['whereYear']) > 0) {
+            $q = $this->whereYear($q, $values['whereYear']);
+        }
+        if (isset($values['whereMonth']) && count($values['whereMonth']) > 0) {
+            $q = $this->whereMonth($q, $values['whereMonth']);
+        }
+        if (isset($values['whereBetween']) && count($values['whereBetween']) > 0) {
+            $q = $this->whereBetween($q, $values['whereBetween']);
+        }
+        if (isset($values['whereIn']) && count($values['whereIn']) > 0) {
+            $q = $this->whereIn($q, $values['whereIn']);
+        };
         if (isset($values['orWhereNotNull']) && count($values['orWhereNotNull']) > 0) {
             $q = $this->whereNotNull($q, $values['orWhereNotNull']);
         }

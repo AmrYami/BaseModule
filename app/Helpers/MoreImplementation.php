@@ -9,6 +9,7 @@ class MoreImplementation
     private static $orWhere = [];
     private static $whereIn = [];
     private static $whereHas = [];
+    private static $moreConditionsInFirstLevel = [];
 
     public static function reset(){
         self::$with = [];
@@ -16,6 +17,7 @@ class MoreImplementation
         self::$whereIn = [];
         self::$whereHas = [];
         self::$withQuery = [];
+        self::$moreConditionsInFirstLevel = [];
     }
     /**
      * @return array
@@ -31,6 +33,21 @@ class MoreImplementation
     public static function setWith(array $with): void
     {
         array_push(self::$with, $with);
+    }
+    /**
+     * @return array
+     */
+    public static function getMoreConditionsInFirstLevel(): array
+    {
+        return self::$moreConditionsInFirstLevel;
+    }
+
+    /**
+     * @param array $with
+     */
+    public static function setMoreConditionsInFirstLevel(array $moreConditionsInFirstLevel): void
+    {
+        array_push(self::$moreConditionsInFirstLevel, $moreConditionsInFirstLevel);
     }
     /**
      * @return array

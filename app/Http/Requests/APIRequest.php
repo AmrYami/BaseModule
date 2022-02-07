@@ -10,6 +10,12 @@ class APIRequest extends FormRequest
 {
     protected function failedValidation(Validator $validator)
     {
+//        $errors = [];
+//        foreach ($validator->errors()->toArray() as $error) {
+//            foreach ($error as $err) {
+//                $errors[] = $err;
+//            }
+//        }
         $errors = $validator->errors();
 
         $response = response()->json([
