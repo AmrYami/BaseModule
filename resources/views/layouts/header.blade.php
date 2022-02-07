@@ -87,7 +87,6 @@
                                         <!--begin::Text-->
                                         <div class="d-flex flex-column font-weight-bold">
                                             <a href="#" class="text-dark text-hover-primary mb-1 font-size-lg">Cool App</a>
-                                            <span class="text-muted">Marketing campaign planning</span>
                                         </div>
                                         <!--end::Text-->
                                     </div>

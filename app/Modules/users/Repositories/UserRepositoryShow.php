@@ -7,7 +7,7 @@ use App\Interfaces\RepositoryShow;
 use App\Repositories\BaseRepositoryShow;
 use Users\Models\User;
 /**
- * Class CampaignRepository
+ * Class Repository
  * @package App\Repositories
  * @version December 11, 2019, 2:33 pm UTC
 */

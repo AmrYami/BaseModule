@@ -89,7 +89,6 @@
                                         <i class="menu-bullet menu-bullet-dot">
                                             <span></span>
                                         </i>
-                                        <span class="menu-text">Team Member Reports</span>
                                     </a>
                                 </li>
                                 <li class="menu-item" aria-haspopup="true">
@@ -97,7 +96,6 @@
                                         <i class="menu-bullet menu-bullet-dot">
                                             <span></span>
                                         </i>
-                                        <span class="menu-text">Assign Tasks</span>
                                     </a>
                                 </li>
                                 <li class="menu-item" aria-haspopup="true">
@@ -203,7 +201,6 @@
                                 <i class="menu-bullet menu-bullet-dot">
                                     <span></span>
                                 </i>
-                                <span class="menu-text">Task Reports</span>
                                 <i class="menu-arrow"></i>
                             </h3>
                             <ul class="menu-inner">
@@ -220,7 +217,6 @@
 																			</svg>
                                                                             <!--end::Svg Icon-->
 																		</span>
-                                        <span class="menu-text">Latest Tasks</span>
                                     </a>
                                 </li>
                                 <li class="menu-item" aria-haspopup="true">
@@ -236,7 +232,6 @@
 																			</svg>
                                                                             <!--end::Svg Icon-->
 																		</span>
-                                        <span class="menu-text">Pending Tasks</span>
                                     </a>
                                 </li>
                                 <li class="menu-item" aria-haspopup="true">
@@ -252,7 +247,6 @@
 																			</svg>
                                                                             <!--end::Svg Icon-->
 																		</span>
-                                        <span class="menu-text">Urgent Tasks</span>
                                     </a>
                                 </li>
                                 <li class="menu-item" aria-haspopup="true">
@@ -268,7 +262,6 @@
 																			</svg>
                                                                             <!--end::Svg Icon-->
 																		</span>
-                                        <span class="menu-text">Completed Tasks</span>
                                     </a>
                                 </li>
                                 <li class="menu-item" aria-haspopup="true">
@@ -285,7 +278,6 @@
 																			</svg>
                                                                             <!--end::Svg Icon-->
 																		</span>
-                                        <span class="menu-text">Failed Tasks</span>
                                     </a>
                                 </li>
                             </ul>
@@ -328,7 +320,6 @@
                                         <i class="menu-bullet menu-bullet-line">
                                             <span></span>
                                         </i>
-                                        <span class="menu-text">Year to Date Reports</span>
                                     </a>
                                 </li>
                                 <li class="menu-item" aria-haspopup="true">
@@ -395,7 +386,6 @@
                                         <i class="menu-bullet menu-bullet-dot">
                                             <span></span>
                                         </i>
-                                        <span class="menu-text">Sales and Marketing</span>
                                     </a>
                                 </li>
                                 <li class="menu-item" aria-haspopup="true">
@@ -419,7 +409,6 @@
                             <ul class="menu-inner">
                                 <li class="menu-item" aria-haspopup="true">
                                     <a href="javascript:;" class="menu-link">
-                                        <span class="menu-text">Analytical Reports</span>
                                     </a>
                                 </li>
                                 <li class="menu-item" aria-haspopup="true">
@@ -548,7 +537,6 @@
 																</svg>
                                                                 <!--end::Svg Icon-->
 															</span>
-                            <span class="menu-text">Sales &amp; Marketing</span>
                         </a>
                     </li>
                     <li class="menu-item" aria-haspopup="true">
@@ -564,7 +552,6 @@
 																</svg>
                                                                 <!--end::Svg Icon-->
 															</span>
-                            <span class="menu-text">Campaigns</span>
                             <span class="menu-label">
 																<span class="label label-success label-rounded">3</span>
 															</span>

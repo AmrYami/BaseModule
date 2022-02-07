@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Helpers\MoreImplementation;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
@@ -39,6 +40,8 @@ class BaseRepositoryShow extends BaseRepository
 
         $query = $this->search($query, $search);
 
+        $query = $this->moreImplementation($query);
+
         if (!is_null($skip)) {
             $query->skip($skip);
         }
@@ -47,6 +50,7 @@ class BaseRepositoryShow extends BaseRepository
             $query->limit($limit);
         }
 
+        MoreImplementation::reset();
         return $query;
     }
 
@@ -123,4 +127,134 @@ class BaseRepositoryShow extends BaseRepository
         }
         return $builder;
     }
+
+    public function moreImplementation($query)
+    {
+        if ($orWhere = MoreImplementation::getOrWhere())
+            $query = $this->addOrWhereToQuery($query, $orWhere);
+
+        if ($with = MoreImplementation::getWith())
+            $query = $this->addWithToQuery($query, $with);
+
+        if ($whereHas = MoreImplementation::getWhereHas())
+            $query = $this->addWhereHasToQuery($query, $whereHas);
+
+        if ($whereHas = MoreImplementation::getWithQuery())
+            $query = $this->addWithQueryToQuery($query, $whereHas);
+
+        return $query;
+    }
+
+    public function addOrWhereToQuery($query, $orWhere)
+    {
+        foreach ($orWhere as $val) {
+            if (in_array($val[0], $this->getFieldsSearchable())) {
+                if (is_array($val[1]))
+                    $query->where($val[0], $val[1][0], $val[1][1]);
+                else
+                    $query->orWhere($val[0], $val[1]);
+            }
+        }
+        return $query;
+    }
+
+    public function addWithToQuery($query, $with)
+    {
+        foreach ($with as $val) {
+            $query->with($val);
+        }
+        return $query;
+    }
+
+//    add wherehas to query take array
+//['shift' => [//name relation
+//          'deep' => add more relation in the last level
+//                  ['users' => [
+//                      'parent_id' => Auth::user()->id
+//                              ]
+//                  ]
+//           'add more conditions' =>
+//             ]
+//];
+    public function addWhereHasToQuery($query, $whereHas)
+    {
+        foreach ($whereHas as $val) {
+            foreach ($val as $key => $value) {
+                $query = $query->whereHas($key, function ($q) use ($key, $value) {
+                    $q = self::proccessQuery($q, $value);
+                    if (isset($value['deep']) && count($value['deep']) > 0)
+                        $this->addWhereHasToQuery($q, $value['deep']);
+                });
+            }
+        }
+        return $query;
+    }
+
+    public function addWithQueryToQuery($query, $whereHas)
+    {
+        foreach ($whereHas as $val) {
+            foreach ($val as $key => $value) {
+                $query = $query->with([$key => function ($q) use ($key, $value) {
+                    $q = self::proccessQuery($q, $value);
+                    if (isset($value['deep']) && count($value['deep']) > 0)
+                        $this->addWithQueryToQuery($q, $value['deep']);
+                }]);
+            }
+        }
+        return $query;
+    }
+
+    public function searchInRel($query, $search)
+    {
+        if (count($search)) {
+            foreach ($search as $val) {
+                foreach ($val as $key => $value) {
+                    $query->where($key, $value);
+                }
+            }
+        }
+        return $query;
+    }
+
+    public function proccessQuery($q, $values, $test = '')
+    {
+        if (isset($values['where']) && count($values['where']) > 0) {
+            $q = $this->searchInRel($q, $values);
+        }
+        if (isset($values['whereBetween']) && count($values['whereBetween']) > 0) {
+            foreach ($values['whereBetween'] as $key => $value) {
+                $q->whereBetween($key, [$value[0], $value[1]]);
+            }
+        }
+        if (isset($values['orWhereNotNull']) && count($values['orWhereNotNull']) > 0) {
+            $q = $this->whereNotNull($q, $values['orWhereNotNull']);
+        }
+        if (isset($values['orWhereNull']) && count($values['orWhereNull']) > 0) {
+            $num = 0;
+            foreach ($values['orWhereNull'] as $column) {
+                if ($num == 0)
+                    $q->whereNull($column);
+                else
+                    $q->orWhereNull($column);
+                $num++;
+            }
+        }
+        if (isset($values['orWherePivot']) && count($values['orWherePivot']) > 0) {
+            foreach ($values['orWherePivot'] as $where => $value) {
+                $q->orWhere($where, $value);
+            }
+        }
+        if (isset($values['whereNotIn']) && count($values['whereNotIn']) > 0) {
+            foreach ($values['whereNotIn'] as $where => $value) {
+                $q->whereNotIn($where, $value);
+            }
+        }
+        if (isset($values['doesntHave']) && count($values['doesntHave']) > 0) {
+            foreach ($values['doesntHave'] as $val) {
+                $q->doesntHave($val);
+            }
+        }
+        return $q;
+    }
+
 }

@@ -50,7 +50,7 @@ class NotificationService
      * Use id to find from Repository
      *
      * @param Int $id
-     * @return questionnaire
+     * @return notification
      */
     public function find($id)
     {
