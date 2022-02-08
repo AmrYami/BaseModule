@@ -133,14 +133,19 @@ class RoleController extends BaseController
      */
     public function update($id, UpdateRoleRequest $request)
     {
-        if ($id == 1)
-            return back();
-        $role = $this->roleServiceStore->update($id, $request);
-        if ($role) {
-            return redirect()->route('roles.index')->with('updated', __('messages.Updated', ['thing' => 'User Role']));
-        } else {
-            return back()->withErrors(__('common.Sorry But there Was an issue in saving Data please try again'));
+        try {
+            if ($id == 1)
+                return back();
+            $role = $this->roleServiceStore->update($id, $request);
+            if ($role) {
+                return redirect()->route('roles.index')->with('updated', __('messages.Updated', ['thing' => 'User Role']));
+            } else {
+                return back()->withErrors(__('common.Sorry But there Was an issue in saving Data please try again'));
+            }
+        } catch (\Exception $exception) {
+            return false;
         }
+
     }
 
     /**

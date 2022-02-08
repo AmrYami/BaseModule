@@ -63,9 +63,9 @@ class UsersController extends BaseController
      */
     public function create(Request $request)
     {
-        $status= [
-            0=> 'pending',
-            1=> 'active',
+        $status = [
+            0 => 'pending',
+            1 => 'active',
         ];
         return view('users::users.create', [
             'action' => 'create',
@@ -118,9 +118,9 @@ class UsersController extends BaseController
      */
     public function edit($id, Request $request)
     {
-        $status= [
-            0=> 'pending',
-            1=> 'active',
+        $status = [
+            0 => 'pending',
+            1 => 'active',
         ];
         $user = $this->serviceShow->find($id, $request);
         return view('users::users.edit', [
@@ -140,13 +140,18 @@ class UsersController extends BaseController
      */
     public function update($id, UpdateUserRequest $request)
     {
-        $request->merge(['type' => 'user']);
-        $user = $this->userServiceStore->update($id, $request);
-        if ($user) {
-            return redirect()->route('users.index')->with('updated', __('messages.Updated', ['thing' => 'User']));
-        } else {
-            return back()->withErrors(__('common.Sorry But there Was an issue in saving Data please try again'));
+        try {
+            $request->merge(['type' => 'user']);
+            $user = $this->userServiceStore->update($id, $request);
+            if ($user) {
+                return redirect()->route('users.index')->with('updated', __('messages.Updated', ['thing' => 'User']));
+            } else {
+                return back()->withErrors(__('common.Sorry But there Was an issue in saving Data please try again'));
+            }
+        } catch (\Exception $exception) {
+            return false;
         }
+
     }
 
     public function update_password($id, UpdateUserPasswordRequest $request)
@@ -177,22 +182,6 @@ class UsersController extends BaseController
             return redirect()->back()->with('deleted', __('messages.Deleted', ['thing' => 'User']));
         } else {
             return back()->withErrors(__('common.Sorry But there Was an issue in saving Data please try again'));
-        }
-    }
-
-    public function trash()
-    {
-        $trashed_users = $this->service->trash();
-        return view('users::users.trash')->with(['users' => $trashed_users]);
-    }
-
-    public function restoreUser(Request $request, $id = null)
-    {
-        $restored = $this->service->restore($request, $id);
-        if (isset($restored)) {
-            return redirect()->back()->with('success', 'messages.User Has Been Restored Successfully ...!');
-        } else {
-            return back()->withErrors('common.Sorry But there Was an issue in saving Data please try again');
         }
     }
 
@@ -242,6 +231,7 @@ class UsersController extends BaseController
             return back()->withErrors(__('common.Sorry But there Was an issue in saving Data please try again'));
         }
     }
+
     public function un_freeze(Request $request, $id)
     {
         $delete = $this->userServiceStore->un_freeze($request, $id);

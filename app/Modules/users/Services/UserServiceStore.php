@@ -69,7 +69,6 @@ class UserServiceStore extends Service implements ServiceStore
      */
     public function update($id, Request $request)
     {
-        try {
             $data = $request->only($this->model->getFillable());
             $user = $this->userRepositoryStore->update($id, $data);
             if ($user) {
@@ -79,9 +78,7 @@ class UserServiceStore extends Service implements ServiceStore
                 MediaFacade::mediafiles($request, $userObject);
             }
             return $user;
-        } catch (\Exception $exception) {
-            return false;
-        }
+
     }
 
     public function updatePassword($id, Request $request)
