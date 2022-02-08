@@ -89,15 +89,6 @@ class RoleController extends BaseController
      */
     public function show($id)
     {
-//        $user = $this->userRepository->find($id);
-//
-//        if (empty($user)) {
-//            Flash::error('User not found');
-//
-//            return redirect(route('roles.index'));
-//        }
-//
-//        return view('users::roles.show')->with('user', $user);
     }
 
     /**
